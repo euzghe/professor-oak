@@ -12,6 +12,8 @@ jobs:
   ai-review:
     name: Claude Code Review
     runs-on: ubuntu-latest
+    # Won't block CI if API key not configured
+    continue-on-error: true
     if: |
       (github.event_name == 'pull_request') ||
       (github.event_name == 'issue_comment' &&
