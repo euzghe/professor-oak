@@ -142,11 +142,13 @@ describe("Trainer Tools", () => {
       expect(result.point_history).toHaveLength(2);
     });
 
-    it("should return error when trainer.yaml does not exist", async () => {
+    it("should auto-create trainer.yaml when it does not exist", async () => {
       const result = await getTrainer({});
 
-      expect(result.success).toBe(false);
-      expect(result.error).toContain("Failed to read");
+      expect(result.success).toBe(true);
+      expect(result.name).toBeNull();
+      expect(result.rank).toBe("Rookie Trainer");
+      expect(result.totalPoints).toBe(0);
     });
   });
 

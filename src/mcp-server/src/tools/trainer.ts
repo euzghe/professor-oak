@@ -6,7 +6,7 @@
 
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
-import { readYaml, writeYaml } from "../services/yaml.js";
+import { readYaml, writeYaml, fileExists } from "../services/yaml.js";
 import { TRAINER_RANKS } from "../config/constants.js";
 import { calculateRank, pointsToNextRank } from "../services/points.js";
 import type { TrainerData, PointHistoryEntry } from "../types/trainer.js";
@@ -17,6 +17,29 @@ import type { TrainerData, PointHistoryEntry } from "../types/trainer.js";
 export async function getTrainer(input: {
   includeHistory?: boolean;
 }): Promise<any> {
+  // Initialize trainer.yaml if it doesn't exist
+  const exists = await fileExists("trainer.yaml");
+  if (!exists) {
+    const initialTrainer: TrainerData = {
+      version: 1,
+      trainer: null,
+      started_at: null,
+      total_points: 0,
+      rank: "Rookie Trainer",
+      settings: {
+        wild_encounters: true,
+        notifications: true,
+      },
+      achievements: {
+        first_pokemon: null,
+        first_badge: null,
+        first_legendary: null,
+      },
+      point_history: [],
+    };
+    await writeYaml("trainer.yaml", initialTrainer, "Professor Oak - Trainer");
+  }
+
   const result = await readYaml<TrainerData>("trainer.yaml");
 
   if (!result.success) {
