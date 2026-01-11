@@ -118,10 +118,10 @@ NEVER read/write game data files directly. Use MCP tools:
 
 ### Files You CAN Edit Directly
 
-- `topics/**/courses/**/*.md` - Course content
-- `topics/**/exercices/**/*.md` - Exercise instructions
-- `topics/**/extras/**/*.md` - Extra learnings
-- `topics/**/sandbox/*` - Trainer's work area
+- `src/**/courses/**/*.md` - Course content
+- `src/**/exercices/**/*.md` - Exercise instructions
+- `src/**/extras/**/*.md` - Extra learnings
+- `src/**/sandbox/*` - Trainer's work area
 
 ## Game Mechanics
 
@@ -167,7 +167,7 @@ Pokemon Master    →  10,000 pts
 ## Topic Structure
 
 ```
-topics/[topic]/
+src/[topic]/
 ├── progress.yaml       # MCP managed
 ├── rewards.yaml        # MCP managed
 ├── courses/

@@ -6,7 +6,7 @@
 
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
-import { readYaml, writeYaml } from "../services/yaml.js";
+import { readYaml, writeYaml, fileExists } from "../services/yaml.js";
 import { POINTS } from "../config/constants.js";
 import type { PokedexData, PokemonEntry } from "../types/pokedex.js";
 
@@ -17,6 +17,24 @@ export async function getPokedex(input: {
   topic?: string;
   level?: string;
 }): Promise<any> {
+  // Initialize pokedex.yaml if it doesn't exist
+  const exists = await fileExists("pokedex.yaml");
+  if (!exists) {
+    const initialPokedex: PokedexData = {
+      version: 1,
+      trainer: null,
+      created_at: new Date().toISOString().split("T")[0],
+      pokemon: [],
+      stats: {
+        total_caught: 0,
+        total_evolved: 0,
+        legendaries: 0,
+        by_topic: {},
+      },
+    };
+    await writeYaml("pokedex.yaml", initialPokedex, "Professor Oak - Pokedex");
+  }
+
   const result = await readYaml<PokedexData>("pokedex.yaml");
 
   if (!result.success) {

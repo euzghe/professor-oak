@@ -18,15 +18,12 @@ $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 Write-Host "[1/4] Checking prerequisites..." -ForegroundColor Yellow
 Write-Host ""
 
-# Check Docker
-try {
-    $dockerVersion = docker --version 2>&1
-    if ($LASTEXITCODE -ne 0) {
-        throw "Docker not found"
-    }
-} catch {
-    Write-Host "ERROR: Docker is not installed." -ForegroundColor Red
+# Check Docker using Get-Command for reliable detection
+$dockerCmd = Get-Command docker -ErrorAction SilentlyContinue
+if (-not $dockerCmd) {
+    Write-Host "ERROR: Docker is not installed or not found in PATH." -ForegroundColor Red
     Write-Host "Please install Docker Desktop from https://www.docker.com/products/docker-desktop/"
+    Write-Host "After installation, ensure Docker is added to your PATH."
     exit 1
 }
 
