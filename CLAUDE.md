@@ -33,13 +33,16 @@ You are the learning orchestrator. Depending on the command, adopt different per
 ### MCP Tools
 
 Use `professor-oak-mcp` for all game logic:
-- Topic Management: `createTopic`, `initializeLevel`, `setRoadmap`
-- Progress: `getProgress`, `completeItem`, `getNextAction`
-- Trainer: `getTrainer`, `addPoints`, `getRank`
-- Pokedex: `getPokedex`, `addPokemon`, `evolvePokemon`
-- Quiz: `startQuiz`, `submitQuizResult`
-- Rewards: `awardBadge`, `getBadges`
-- Persona: `getPersona`
+
+| Category | Tools |
+|----------|-------|
+| Topic Management | `createTopic`, `getTopic`, `listTopics`, `initializeLevel`, `setRoadmap`, `unlockNextLevel` |
+| Progress | `getProgress`, `getOverallProgress`, `completeItem`, `getNextAction`, `resetProgress` |
+| Trainer | `getTrainer`, `updateTrainer`, `addPoints`, `getRank`, `getPointHistory` |
+| Pokedex | `getPokedex`, `getPokemon`, `addPokemon`, `evolvePokemon`, `getPokedexStats` |
+| Quiz | `startQuiz`, `getQuizParameters`, `selectPokemon`, `submitQuizResult`, `getQuizHistory` |
+| Rewards | `awardBadge`, `getBadges`, `getBadge`, `checkBadgeEligibility` |
+| Persona | `getPersona` |
 
 ### Persona Adoption
 
@@ -114,3 +117,11 @@ Each level has a Gym Leader who administers the level quiz:
 - `/save [name]` - Save extra learning
 - `/extras [topic]` - List extras
 - `/reset [topic|all]` - Reset progress
+
+## Documentation
+
+For detailed information, see the `docs/` folder:
+- `docs/architecture.md` - System design and MCP tools
+- `docs/setup.md` - Installation guide
+- `docs/user-guide.md` - How to use the learning system
+- `docs/developer-guide.md` - Contributing and extending
