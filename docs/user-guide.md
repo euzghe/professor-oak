@@ -455,11 +455,11 @@ Wild encounters are high risk/high reward:
 
 Save them for topics you're confident in.
 
-### 5. Save Extra Learnings
+### 5. Save Extra Learnings (Coming Soon)
 
-When you learn something interesting in conversation:
-1. Use `/save` to capture it
-2. Take the optional quiz
+When `/save` is available, you'll be able to:
+1. Capture interesting learnings from conversation
+2. Take an optional quiz
 3. Catch a bonus Pokemon!
 
 ### 6. Review for Evolution

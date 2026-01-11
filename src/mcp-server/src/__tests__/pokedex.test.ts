@@ -276,11 +276,12 @@ describe("Pokedex Tools", () => {
       expect(result.filtersApplied).toEqual({ topic: "docker", level: "beginner" });
     });
 
-    it("should return error when pokedex.yaml does not exist", async () => {
+    it("should auto-create pokedex.yaml when it does not exist", async () => {
       const result = await getPokedex({});
 
-      expect(result.success).toBe(false);
-      expect(result.error).toContain("Failed to read");
+      expect(result.success).toBe(true);
+      expect(result.pokemon).toEqual([]);
+      expect(result.stats.total_caught).toBe(0);
     });
   });
 

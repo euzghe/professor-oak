@@ -14,7 +14,7 @@ This guide covers contributing to Professor Oak, extending the MCP server, and w
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/professor-oak.git
+git clone https://github.com/tomblancdev/professor-oak.git
 cd professor-oak
 
 # Open in VS Code with devcontainers
@@ -25,7 +25,7 @@ code .
 ### Manual Development (Without VS Code)
 
 ```bash
-cd mcp/professor-oak-mcp
+cd src/mcp-server
 
 # Install dependencies
 docker run --rm -v $(pwd):/app -w /app node:20-alpine npm ci
@@ -44,27 +44,27 @@ docker run --rm -v $(pwd):/app -w /app node:20-alpine npm run dev
 
 ```
 professor-oak/
-├── CLAUDE.md                 # Claude instructions (critical file)
-├── .mcp.json                 # MCP configuration
+├── CLAUDE.md                 # Claude instructions (root)
 ├── .claudeignore             # Protected files
-├── mcp/
-│   └── professor-oak-mcp/    # MCP server
-│       ├── src/
-│       │   ├── index.ts      # Entry point
-│       │   ├── tools/        # Tool implementations
-│       │   ├── services/     # Shared services
-│       │   ├── types/        # TypeScript interfaces
-│       │   └── config/       # Constants and configs
-│       ├── Dockerfile
-│       ├── package.json
-│       └── tsconfig.json
 ├── .claude/
 │   ├── commands/             # Slash command definitions
 │   ├── hooks/                # Pre-commit hooks
 │   └── settings.json         # Hook configuration
-├── personas/                 # Character persona files
+├── docs/                     # Documentation
 ├── topics/                   # Learning content (auto-generated)
-└── docs/                     # Documentation
+└── src/
+    ├── CLAUDE.md             # Persona system instructions
+    ├── .mcp.json             # MCP configuration
+    └── mcp-server/           # MCP server
+        ├── src/
+        │   ├── index.ts      # Entry point
+        │   ├── tools/        # Tool implementations
+        │   ├── services/     # Shared services
+        │   ├── types/        # TypeScript interfaces
+        │   └── config/       # Constants and configs
+        ├── Dockerfile
+        ├── package.json
+        └── tsconfig.json
 ```
 
 ## Adding New Topics
@@ -136,7 +136,7 @@ milestones: []
 1. **Create the tool file** (or add to existing category):
 
 ```typescript
-// mcp/professor-oak-mcp/src/tools/my-tool.ts
+// src/mcp-server/src/tools/my-tool.ts
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 
@@ -169,7 +169,7 @@ export function registerMyTools(server: McpServer) {
 2. **Register in index.ts**:
 
 ```typescript
-// mcp/professor-oak-mcp/src/index.ts
+// src/mcp-server/src/index.ts
 import { registerMyTools } from "./tools/my-tool.js";
 
 // ... in server setup
@@ -195,7 +195,7 @@ registerMyTools(server);
 ### Example: Adding a Leaderboard Tool
 
 ```typescript
-// mcp/professor-oak-mcp/src/tools/leaderboard.ts
+// src/mcp-server/src/tools/leaderboard.ts
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { readYaml } from "../services/yaml.js";
@@ -361,7 +361,7 @@ Use neutral/celebratory tone, no specific persona required.
 ### Running Tests
 
 ```bash
-cd mcp/professor-oak-mcp
+cd src/mcp-server
 
 # Run all tests
 docker run --rm -v $(pwd):/app -w /app node:20-alpine npm run test:run
@@ -376,7 +376,7 @@ docker run --rm -v $(pwd):/app -w /app node:20-alpine npm test
 ### Writing Tests
 
 ```typescript
-// mcp/professor-oak-mcp/src/__tests__/my-tool.test.ts
+// src/mcp-server/src/__tests__/my-tool.test.ts
 import { describe, it, expect, beforeEach, afterEach } from "vitest";
 import { readYaml, writeYaml } from "../services/yaml.js";
 
@@ -464,7 +464,7 @@ Edit `.github/workflows/ci.yml`:
 ```yaml
 - name: My Custom Check
   run: |
-    cd mcp/professor-oak-mcp
+    cd src/mcp-server
     docker run --rm -v $(pwd):/app -w /app node:20-alpine npm run my-check
 ```
 
@@ -518,7 +518,7 @@ return jsonResponse({
 ### Development Build
 
 ```bash
-cd mcp/professor-oak-mcp
+cd src/mcp-server
 docker build -t professor-oak-mcp:dev .
 ```
 

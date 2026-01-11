@@ -268,17 +268,18 @@ The MCP server provides 25+ tools across 7 categories:
 
 ```
 professor-oak/
-├── CLAUDE.md              # Instructions for Claude
+├── CLAUDE.md              # Instructions for Claude (root)
 ├── .claudeignore          # Protected files list
-├── .mcp.json              # MCP server configuration
-├── trainer.yaml           # Global trainer profile (MCP-managed)
-├── pokedex.yaml           # Global Pokemon collection (MCP-managed)
-├── quiz-history/          # Monthly quiz records
-│   └── YYYY-MM.yaml
-├── mcp/                   # MCP server source
-├── personas/              # Character persona files
-├── topics/                # Learning content
-└── docs/                  # Documentation
+├── docs/                  # Documentation
+├── topics/                # Learning content (auto-created)
+└── src/
+    ├── CLAUDE.md          # Persona system instructions
+    ├── .mcp.json          # MCP server configuration
+    ├── trainer.yaml       # Global trainer profile (MCP-managed, auto-created)
+    ├── pokedex.yaml       # Global Pokemon collection (MCP-managed, auto-created)
+    ├── quiz-history/      # Monthly quiz records
+    │   └── YYYY-MM.yaml
+    └── mcp-server/        # MCP server source
 ```
 
 ### Topic Structure
@@ -311,7 +312,7 @@ topics/[topic]/
 ### MCP Server Structure
 
 ```
-mcp/professor-oak-mcp/
+src/mcp-server/
 ├── src/
 │   ├── index.ts           # Server entry point
 │   ├── tools/
@@ -427,7 +428,7 @@ CMD ["node", "dist/index.js"]
 
 ### Adding New Tools
 
-1. Create tool in `mcp/professor-oak-mcp/src/tools/`
+1. Create tool in `src/mcp-server/src/tools/`
 2. Register in `index.ts`
 3. Update CLAUDE.md with usage instructions
 
