@@ -189,9 +189,9 @@ topics/[topic]/
 | `/quiz [topic]` | Challenge a Gym Leader |
 | `/pokedex [topic]` | View caught Pokemon |
 | `/wild` | Random knowledge encounter |
-| `/save [name]` | Save extra discovery |
-| `/extras [topic]` | List saved extras |
-| `/reset [topic\|all]` | Reset progress |
+| `/save [name]` | Save extra discovery *(Coming Soon)* |
+| `/extras [topic]` | List saved extras *(Coming Soon)* |
+| `/reset [topic\|all]` | Reset progress *(Coming Soon)* |
 
 ## Response Examples
 

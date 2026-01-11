@@ -90,9 +90,9 @@ claude
 | `/quiz [topic]` | Take a quiz to catch Pokemon | `/quiz docker` |
 | `/pokedex [topic]` | View your caught Pokemon | `/pokedex` |
 | `/wild` | Trigger a random encounter | `/wild` |
-| `/save [topic]` | Save ad-hoc learning | `/save` |
-| `/extras [topic]` | Browse extra learnings | `/extras docker` |
-| `/reset [scope]` | Reset progress | `/reset docker/starter` |
+| `/save [topic]` | Save ad-hoc learning *(Coming Soon)* | `/save` |
+| `/extras [topic]` | Browse extra learnings *(Coming Soon)* | `/extras docker` |
+| `/reset [scope]` | Reset progress *(Coming Soon)* | `/reset docker/starter` |
 
 ## How It Works
 

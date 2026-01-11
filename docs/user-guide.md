@@ -171,9 +171,11 @@ FAIL: +12 points
 
 **Note:** Wild encounters have higher rewards but also higher risk!
 
-### Extra Learning Commands
+### Extra Learning Commands (Coming Soon)
 
-#### `/save [topic]`
+> **Note**: The following commands are planned features and not yet implemented.
+
+#### `/save [topic]` (Coming Soon)
 
 Save ad-hoc learning from your conversation.
 
@@ -206,7 +208,7 @@ Want a quick quiz to catch a Pokemon?
 [Yes] [No, maybe later]"
 ```
 
-#### `/extras [topic]`
+#### `/extras [topic]` (Coming Soon)
 
 Browse your saved extra learnings.
 
@@ -230,9 +232,11 @@ docker (3 entries)
 Total: 6 extras | 45 points earned
 ```
 
-### Management Commands
+### Management Commands (Coming Soon)
 
-#### `/reset [scope]`
+> **Note**: The following commands are planned features and not yet implemented.
+
+#### `/reset [scope]` (Coming Soon)
 
 Reset progress at various levels.
 
