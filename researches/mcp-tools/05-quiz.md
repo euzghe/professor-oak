@@ -479,13 +479,40 @@ const questionGuidelines = {
 
 ---
 
-## Storage: Quiz entries in progress.yaml
+## Storage: Quiz History
+
+Quiz history is **user data** (like trainer.yaml, pokedex.yaml), stored at top-level with monthly grouping:
+
+```
+professor-oak/
+├── trainer.yaml
+├── pokedex.yaml
+├── quiz-history/
+│   ├── 2026-01.yaml    ← Monthly files
+│   └── 2026-02.yaml
+└── src/
+    └── docker/
+        └── progress.yaml  ← Only current state, no history
+```
+
+**Pagination**: 100 entries per file max. When exceeded, create new page:
+```
+quiz-history/
+  2026-01-p1.yaml    ← First 100
+  2026-01-p2.yaml    ← Next 100
+```
+
+### quiz-history/2026-01.yaml
 
 ```yaml
-# In topic's progress.yaml
-quizzes:
+month: 2026-01
+page: 1
+count: 42
+
+entries:
   - session_id: quiz-2026-01-11-001
     date: 2026-01-11
+    topic: docker
     course: 01-first-container
     level: starter
     type: standard
@@ -505,6 +532,7 @@ quizzes:
 
   - session_id: quiz-2026-01-11-002
     date: 2026-01-11
+    topic: docker
     course: null                  # Wild encounter
     level: starter
     type: wild
@@ -519,4 +547,28 @@ quizzes:
       correct: 3
       passed: true
       points_earned: 82          # 55 × 1.5 (wild bonus)
+
+    gym_leader: null              # No gym leader for wild
+```
+
+### progress.yaml (clean)
+
+```yaml
+# src/docker/progress.yaml - Only current state
+current_level: beginner
+
+roadmap:
+  starter:
+    status: completed
+    completed_at: 2026-01-10
+  beginner:
+    status: active
+    courses:
+      - id: 01-first-container
+        completed: true
+      - id: 02-images-basics
+        completed: true
+      - id: 03-volumes
+        completed: false
+    # No quiz history here anymore!
 ```
