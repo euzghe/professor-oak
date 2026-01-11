@@ -63,7 +63,7 @@ professor-oak/
 │   ├── hooks/                # Pre-commit hooks
 │   └── settings.json         # Hook configuration
 ├── personas/                 # Character persona files
-├── src/                      # Learning content (auto-generated)
+├── topics/                   # Learning content (auto-generated)
 └── docs/                     # Documentation
 ```
 
@@ -74,7 +74,7 @@ Topics are created automatically when users run `/learn`. The MCP server handles
 ### Topic Structure Created
 
 ```
-src/[topic]/
+topics/[topic]/
 ├── progress.yaml           # Auto-managed by MCP
 ├── rewards.yaml            # Auto-managed by MCP
 ├── rewards/                # Badge assets
@@ -98,13 +98,13 @@ To add pre-made courses for a topic:
 1. Create the topic structure:
 ```bash
 # Either use /learn or manually create:
-mkdir -p src/my-topic/courses/starter
-mkdir -p src/my-topic/exercices/starter
+mkdir -p topics/my-topic/courses/starter
+mkdir -p topics/my-topic/exercices/starter
 ```
 
 2. Create course files:
 ```bash
-# src/my-topic/courses/starter/01-introduction.md
+# topics/my-topic/courses/starter/01-introduction.md
 ```
 
 3. Create progress.yaml:

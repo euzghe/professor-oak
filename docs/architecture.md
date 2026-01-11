@@ -49,7 +49,7 @@ Professor Oak uses a layered architecture where Claude acts as the orchestrator,
 │  └────────────────┘  └────────────────┘  └────────────────┘     │
 │                                                                  │
 │  ┌────────────────────────────────────────────────────────┐     │
-│  │                    src/[topic]/                         │     │
+│  │                   topics/[topic]/                       │     │
 │  │  progress.yaml │ rewards.yaml │ courses/ │ exercices/   │     │
 │  └────────────────────────────────────────────────────────┘     │
 └─────────────────────────────────────────────────────────────────┘
@@ -202,7 +202,7 @@ The MCP server provides 25+ tools across 7 categories:
 
 2. Claude calls MCP: createTopic("docker")
    MCP creates:
-   └── src/docker/
+   └── topics/docker/
        ├── progress.yaml    (initialized)
        ├── rewards.yaml     (empty)
        ├── courses/
@@ -222,7 +222,7 @@ The MCP server provides 25+ tools across 7 categories:
 
 6. Claude calls MCP: setRoadmap("docker", "starter", {...})
    MCP creates:
-   └── src/docker/courses/starter/
+   └── topics/docker/courses/starter/
        ├── 01-what-is-docker.md   (placeholder)
        ├── 02-installation.md
        └── 03-first-container.md
@@ -277,14 +277,14 @@ professor-oak/
 │   └── YYYY-MM.yaml
 ├── mcp/                   # MCP server source
 ├── personas/              # Character persona files
-├── src/                   # Learning content
+├── topics/                # Learning content
 └── docs/                  # Documentation
 ```
 
 ### Topic Structure
 
 ```
-src/[topic]/
+topics/[topic]/
 ├── progress.yaml          # Topic progress (MCP-managed)
 ├── rewards.yaml           # Badges and milestones (MCP-managed)
 ├── rewards/               # Generated badge assets
