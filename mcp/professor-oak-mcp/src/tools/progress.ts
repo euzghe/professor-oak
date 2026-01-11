@@ -111,11 +111,7 @@ export async function getProgressHandler(args: {
 
   if (!topic) {
     // Return overall progress
-    const overall = await getOverallProgressHandler({});
-    return {
-      success: overall.success,
-      ...overall,
-    };
+    return await getOverallProgressHandler({});
   }
 
   // Determine topic path (handle subtopics like aws/ec2)
