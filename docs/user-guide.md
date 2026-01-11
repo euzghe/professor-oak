@@ -144,7 +144,7 @@ PYTHON (8 Pokemon)
   ...
 ```
 
-#### `/wild` (Coming Soon)
+#### `/wild`
 
 Trigger a random knowledge encounter for bonus rewards.
 
