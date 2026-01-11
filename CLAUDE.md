@@ -74,7 +74,7 @@ src/mcp-server/src/
 ### Topic Content Structure
 
 ```
-src/[topic]/
+topics/[topic]/
 ├── progress.yaml      # MCP-managed
 ├── rewards.yaml       # MCP-managed
 ├── courses/

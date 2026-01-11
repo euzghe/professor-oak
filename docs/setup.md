@@ -247,7 +247,7 @@ This should:
 
 Verify the structure was created:
 ```bash
-ls -la src/docker/
+ls -la topics/docker/
 ```
 
 ### Test Progress Tracking

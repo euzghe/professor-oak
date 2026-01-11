@@ -154,16 +154,17 @@ claude
 professor-oak/
 ├── CLAUDE.md              # Claude instructions (root)
 ├── docs/                  # Documentation
+├── topics/                # Learning content directory
+│   └── [topic]/           # Per-topic content
+│       ├── courses/
+│       ├── exercices/
+│       └── extras/
 └── src/                   # Main source directory
     ├── CLAUDE.md          # Persona system instructions
     ├── .mcp.json          # MCP server configuration
     ├── trainer.yaml       # Your trainer profile (auto-created)
     ├── pokedex.yaml       # Your Pokemon collection (auto-created)
-    ├── mcp-server/        # MCP server source code
-    └── [topic]/           # Learning content (per topic)
-        ├── courses/
-        ├── exercices/
-        └── extras/
+    └── mcp-server/        # MCP server source code
 ```
 
 ## Documentation
