@@ -57,7 +57,7 @@ Pre-commit hooks automatically run build, type-check, and tests via Docker.
    - Protected files (`.claudeignore`): `trainer.yaml`, `pokedex.yaml`, `**/progress.yaml`, `**/rewards.yaml`
 
 2. **Claude (Persona Layer)** - Handles content and user interaction
-   - Can directly edit: `courses/**/*.md`, `exercices/**/*.md`, `extras/**/*.md`, `sandbox/*`
+   - Can directly edit: `topics/**/courses/**/*.md`, `topics/**/exercices/**/*.md`, `topics/**/extras/**/*.md`, `topics/**/sandbox/*`
    - Must use MCP tools for any game state changes
 
 ### MCP Server Structure
@@ -74,7 +74,7 @@ src/mcp-server/src/
 ### Topic Content Structure
 
 ```
-src/[topic]/
+topics/[topic]/
 ├── progress.yaml      # MCP-managed
 ├── rewards.yaml       # MCP-managed
 ├── courses/
