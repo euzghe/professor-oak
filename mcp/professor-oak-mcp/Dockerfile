@@ -6,6 +6,9 @@
 # ============================================
 FROM node:20-alpine AS builder
 
+# Install bash for devcontainer compatibility (Alpine uses ash by default)
+RUN apk add --no-cache bash
+
 WORKDIR /app
 
 # Copy package files
