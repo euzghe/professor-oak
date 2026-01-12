@@ -149,7 +149,7 @@ describe("Topic Management Tools", () => {
     });
 
     it("should detect existing topic", async () => {
-      const topicPath = "src/docker";
+      const topicPath = "topics/docker";
       await createDirectory(topicPath);
 
       const exists = await fileExists(topicPath);
@@ -207,7 +207,7 @@ describe("Topic Management Tools", () => {
     });
 
     it("should calculate completion stats", async () => {
-      const topicPath = "src/docker";
+      const topicPath = "topics/docker";
       await createDirectory(topicPath);
 
       const progress: TopicProgress = {
@@ -269,7 +269,7 @@ describe("Topic Management Tools", () => {
     });
 
     it("should handle non-existent topic", async () => {
-      const result = await readYaml<TopicProgress>("src/nonexistent/progress.yaml");
+      const result = await readYaml<TopicProgress>("topics/nonexistent/progress.yaml");
       expect(result.success).toBe(false);
     });
   });
@@ -277,8 +277,8 @@ describe("Topic Management Tools", () => {
   describe("listTopics", () => {
     it("should list all topics in src folder", async () => {
       // Create multiple topics
-      await createDirectory("src/docker");
-      await createDirectory("src/python");
+      await createDirectory("topics/docker");
+      await createDirectory("topics/python");
 
       const dockerProgress: TopicProgress = {
         version: 1,
@@ -304,11 +304,11 @@ describe("Topic Management Tools", () => {
         extras: [],
       };
 
-      await writeYaml("src/docker/progress.yaml", dockerProgress);
-      await writeYaml("src/python/progress.yaml", pythonProgress);
+      await writeYaml("topics/docker/progress.yaml", dockerProgress);
+      await writeYaml("topics/python/progress.yaml", pythonProgress);
 
       // Read directories
-      const srcPath = path.join(TEST_DATA_PATH, "src");
+      const srcPath = path.join(TEST_DATA_PATH, "topics");
       const entries = await fs.readdir(srcPath, { withFileTypes: true });
       const topics = entries.filter(e => e.isDirectory()).map(e => e.name);
 
@@ -318,7 +318,7 @@ describe("Topic Management Tools", () => {
     });
 
     it("should include progress stats when requested", async () => {
-      await createDirectory("src/docker");
+      await createDirectory("topics/docker");
 
       const progress: TopicProgress = {
         version: 1,
@@ -343,9 +343,9 @@ describe("Topic Management Tools", () => {
         extras: [],
       };
 
-      await writeYaml("src/docker/progress.yaml", progress);
+      await writeYaml("topics/docker/progress.yaml", progress);
 
-      const result = await readYaml<TopicProgress>("src/docker/progress.yaml");
+      const result = await readYaml<TopicProgress>("topics/docker/progress.yaml");
       const courses = result.data!.roadmap.starter?.courses || [];
       const completed = courses.filter(c => c.completed).length;
       const completion = Math.round((completed / courses.length) * 100);
@@ -356,7 +356,7 @@ describe("Topic Management Tools", () => {
 
   describe("initializeLevel", () => {
     it("should set starting level in progress.yaml", async () => {
-      const topicPath = "src/docker";
+      const topicPath = "topics/docker";
       await createDirectory(topicPath);
 
       const progress: TopicProgress = {
@@ -392,7 +392,7 @@ describe("Topic Management Tools", () => {
     });
 
     it("should reject if level already set", async () => {
-      const topicPath = "src/docker";
+      const topicPath = "topics/docker";
       await createDirectory(topicPath);
 
       const progress: TopicProgress = {
@@ -431,7 +431,7 @@ describe("Topic Management Tools", () => {
 
   describe("setRoadmap", () => {
     it("should save roadmap to progress.yaml", async () => {
-      const topicPath = "src/docker";
+      const topicPath = "topics/docker";
       await createDirectory(`${topicPath}/courses/starter`);
       await createDirectory(`${topicPath}/exercices/starter`);
 
@@ -479,7 +479,7 @@ describe("Topic Management Tools", () => {
     });
 
     it("should create course placeholder files", async () => {
-      const topicPath = "src/docker";
+      const topicPath = "topics/docker";
       const level = "starter";
       await createDirectory(`${topicPath}/courses/${level}`);
 
@@ -512,7 +512,7 @@ describe("Topic Management Tools", () => {
     });
 
     it("should create exercise folders with structure", async () => {
-      const topicPath = "src/docker";
+      const topicPath = "topics/docker";
       const level = "starter";
       const courseId = "01-intro";
 

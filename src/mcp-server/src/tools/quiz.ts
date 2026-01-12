@@ -151,7 +151,7 @@ export async function startQuizHandler(args: {
   const { topic, course, type = "standard" } = args;
 
   // Read topic progress
-  const topicPath = `src/${topic}`;
+  const topicPath = `topics/${topic}`;
   const result = await readYaml<TopicProgress>(`${topicPath}/progress.yaml`);
 
   if (!result.success || !result.data) {

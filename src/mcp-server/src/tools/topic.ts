@@ -10,6 +10,7 @@ import * as fs from "fs/promises";
 import * as path from "path";
 import { readYaml, writeYaml, fileExists, createDirectory } from "../services/yaml.js";
 import { LEVELS, isValidKebabCase } from "../config/constants.js";
+import { getTopicPath, getProgressPath, getRewardsPath, TOPICS_BASE_PATH } from "../services/paths.js";
 import type { TopicProgress, LevelRoadmap } from "../types/progress.js";
 
 /**

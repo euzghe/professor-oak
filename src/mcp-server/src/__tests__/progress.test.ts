@@ -134,7 +134,7 @@ describe("Progress Tools", () => {
     it("should return overall progress when no topic specified", async () => {
       // Setup
       await writeTestYaml("trainer.yaml", createMockTrainerData());
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
 
       // Execute
       const result = await getOverallProgressHandler({});
@@ -149,7 +149,7 @@ describe("Progress Tools", () => {
 
     it("should return detailed progress for a specific topic", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
 
       // Execute
       const result = await getProgressHandler({ topic: "docker" });
@@ -169,7 +169,7 @@ describe("Progress Tools", () => {
       const progress = createMockTopicProgress();
       delete progress.roadmap.advanced;
       delete progress.roadmap.expert;
-      await writeTestYaml("src/docker/progress.yaml", progress);
+      await writeTestYaml("topics/docker/progress.yaml", progress);
 
       // Execute
       const result = await getProgressHandler({ topic: "docker" });
@@ -182,7 +182,7 @@ describe("Progress Tools", () => {
 
     it("should calculate correct completion percentage", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
 
       // Execute
       const result = await getProgressHandler({ topic: "docker" });
@@ -204,7 +204,7 @@ describe("Progress Tools", () => {
 
     it("should include exercise statistics", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
 
       // Execute
       const result = await getProgressHandler({ topic: "docker" });
@@ -218,7 +218,7 @@ describe("Progress Tools", () => {
 
     it("should include quiz status", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
 
       // Execute
       const result = await getProgressHandler({ topic: "docker" });
@@ -231,7 +231,7 @@ describe("Progress Tools", () => {
 
     it("should include extras count", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
 
       // Execute
       const result = await getProgressHandler({ topic: "docker" });
@@ -244,7 +244,7 @@ describe("Progress Tools", () => {
   describe("completeItem", () => {
     it("should mark a course as completed", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
       await writeTestYaml("trainer.yaml", createMockTrainerData());
 
       // Execute
@@ -263,7 +263,7 @@ describe("Progress Tools", () => {
       expect(result.message).toContain("+25 points");
 
       // Verify progress.yaml updated
-      const progress = await readTestYaml<TopicProgress>("src/docker/progress.yaml");
+      const progress = await readTestYaml<TopicProgress>("topics/docker/progress.yaml");
       const course = progress.roadmap.beginner.courses.find(c => c.id === "02-images-basics");
       expect(course?.completed).toBe(true);
       expect(course?.completed_at).toBeDefined();
@@ -271,7 +271,7 @@ describe("Progress Tools", () => {
 
     it("should mark an exercise as completed with mandatory points", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
       await writeTestYaml("trainer.yaml", createMockTrainerData());
 
       // Execute
@@ -290,7 +290,7 @@ describe("Progress Tools", () => {
 
     it("should mark an optional exercise with lower points", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
       await writeTestYaml("trainer.yaml", createMockTrainerData());
 
       // Execute
@@ -309,7 +309,7 @@ describe("Progress Tools", () => {
 
     it("should update trainer points", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
       await writeTestYaml("trainer.yaml", createMockTrainerData({ total_points: 500 }));
 
       // Execute
@@ -328,7 +328,7 @@ describe("Progress Tools", () => {
 
     it("should return error for already completed item", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
       await writeTestYaml("trainer.yaml", createMockTrainerData());
 
       // Execute - try to complete already completed course
@@ -346,7 +346,7 @@ describe("Progress Tools", () => {
 
     it("should return error for non-existent item", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
       await writeTestYaml("trainer.yaml", createMockTrainerData());
 
       // Execute
@@ -364,7 +364,7 @@ describe("Progress Tools", () => {
 
     it("should require courseId for exercises", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
       await writeTestYaml("trainer.yaml", createMockTrainerData());
 
       // Execute
@@ -390,7 +390,7 @@ describe("Progress Tools", () => {
       ];
       progress.roadmap.beginner.exercices = {};
       progress.roadmap.beginner.quizRequired = false;
-      await writeTestYaml("src/docker/progress.yaml", progress);
+      await writeTestYaml("topics/docker/progress.yaml", progress);
       await writeTestYaml("trainer.yaml", createMockTrainerData());
 
       // Execute
@@ -408,7 +408,7 @@ describe("Progress Tools", () => {
 
     it("should return remaining items in level progress", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
       await writeTestYaml("trainer.yaml", createMockTrainerData());
 
       // Execute
@@ -430,7 +430,7 @@ describe("Progress Tools", () => {
     it("should suggest level selection when no level set", async () => {
       // Setup
       const progress = createMockTopicProgress({ current_level: null });
-      await writeTestYaml("src/docker/progress.yaml", progress);
+      await writeTestYaml("topics/docker/progress.yaml", progress);
 
       // Execute
       const result = await getNextActionHandler({ topic: "docker" });
@@ -446,7 +446,7 @@ describe("Progress Tools", () => {
       const progress = createMockTopicProgress();
       progress.current_level = "advanced";
       progress.roadmap.advanced = { status: "active", courses: [], exercices: {} };
-      await writeTestYaml("src/docker/progress.yaml", progress);
+      await writeTestYaml("topics/docker/progress.yaml", progress);
 
       // Execute
       const result = await getNextActionHandler({ topic: "docker" });
@@ -458,7 +458,7 @@ describe("Progress Tools", () => {
 
     it("should suggest incomplete course first", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
 
       // Execute
       const result = await getNextActionHandler({ topic: "docker" });
@@ -468,7 +468,7 @@ describe("Progress Tools", () => {
       expect(result.nextAction.type).toBe("course");
       expect(result.nextAction.id).toBe("02-images-basics");
       expect(result.nextAction.name).toBe("Images Basics");
-      expect(result.nextAction.path).toContain("src/docker/courses/beginner");
+      expect(result.nextAction.path).toContain("topics/docker/courses/beginner");
     });
 
     it("should suggest mandatory exercise after all courses done", async () => {
@@ -478,7 +478,7 @@ describe("Progress Tools", () => {
         c.completed = true;
         c.completed_at = "2026-01-10";
       });
-      await writeTestYaml("src/docker/progress.yaml", progress);
+      await writeTestYaml("topics/docker/progress.yaml", progress);
 
       // Execute
       const result = await getNextActionHandler({ topic: "docker" });
@@ -501,7 +501,7 @@ describe("Progress Tools", () => {
         e.completed = true;
         e.completed_at = "2026-01-10";
       });
-      await writeTestYaml("src/docker/progress.yaml", progress);
+      await writeTestYaml("topics/docker/progress.yaml", progress);
 
       // Execute
       const result = await getNextActionHandler({ topic: "docker" });
@@ -528,7 +528,7 @@ describe("Progress Tools", () => {
         });
       });
       progress.roadmap.beginner.quizPassed = true;
-      await writeTestYaml("src/docker/progress.yaml", progress);
+      await writeTestYaml("topics/docker/progress.yaml", progress);
 
       // Execute
       const result = await getNextActionHandler({ topic: "docker" });
@@ -552,7 +552,7 @@ describe("Progress Tools", () => {
         quizRequired: true,
         quizPassed: true,
       };
-      await writeTestYaml("src/docker/progress.yaml", progress);
+      await writeTestYaml("topics/docker/progress.yaml", progress);
 
       // Execute
       const result = await getNextActionHandler({ topic: "docker" });
@@ -574,7 +574,7 @@ describe("Progress Tools", () => {
 
     it("should include alternatives when available", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
 
       // Execute
       const result = await getNextActionHandler({ topic: "docker" });
@@ -588,7 +588,7 @@ describe("Progress Tools", () => {
     it("should return trainer information", async () => {
       // Setup
       await writeTestYaml("trainer.yaml", createMockTrainerData());
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
 
       // Execute
       const result = await getOverallProgressHandler({});
@@ -603,8 +603,8 @@ describe("Progress Tools", () => {
     it("should list all topics with progress", async () => {
       // Setup
       await writeTestYaml("trainer.yaml", createMockTrainerData());
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
-      await writeTestYaml("src/python/progress.yaml", createMockTopicProgress({
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/python/progress.yaml", createMockTopicProgress({
         topic: "python",
         display_name: "Python",
         current_level: "starter",
@@ -622,7 +622,7 @@ describe("Progress Tools", () => {
 
     it("should handle missing trainer file", async () => {
       // Setup - no trainer.yaml
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
 
       // Execute
       const result = await getOverallProgressHandler({});
@@ -635,8 +635,8 @@ describe("Progress Tools", () => {
     it("should calculate totals across topics", async () => {
       // Setup
       await writeTestYaml("trainer.yaml", createMockTrainerData());
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
-      await writeTestYaml("src/python/progress.yaml", createMockTopicProgress({
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/python/progress.yaml", createMockTopicProgress({
         topic: "python",
         display_name: "Python",
       }));
@@ -652,7 +652,7 @@ describe("Progress Tools", () => {
     it("should include completion percentage per topic", async () => {
       // Setup
       await writeTestYaml("trainer.yaml", createMockTrainerData());
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
 
       // Execute
       const result = await getOverallProgressHandler({});
@@ -670,7 +670,7 @@ describe("Progress Tools", () => {
       // Setup
       const progress = createMockTopicProgress();
       progress.roadmap.beginner.exercices = {};
-      await writeTestYaml("src/docker/progress.yaml", progress);
+      await writeTestYaml("topics/docker/progress.yaml", progress);
 
       // Execute
       const result = await getProgressHandler({ topic: "docker" });
@@ -684,7 +684,7 @@ describe("Progress Tools", () => {
       // Setup
       const progress = createMockTopicProgress();
       progress.extras = [];
-      await writeTestYaml("src/docker/progress.yaml", progress);
+      await writeTestYaml("topics/docker/progress.yaml", progress);
 
       // Execute
       const result = await getProgressHandler({ topic: "docker" });
@@ -696,7 +696,7 @@ describe("Progress Tools", () => {
 
     it("should handle rank promotion on points update", async () => {
       // Setup - trainer just below next rank threshold
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
       await writeTestYaml("trainer.yaml", createMockTrainerData({
         total_points: 1990, // Just below Great Trainer (2000)
         rank: "Pokemon Trainer",
@@ -718,7 +718,7 @@ describe("Progress Tools", () => {
 
     it("should handle subtopic paths correctly", async () => {
       // Setup - subtopic structure
-      await writeTestYaml("src/aws/subtopics/ec2/progress.yaml", createMockTopicProgress({
+      await writeTestYaml("topics/aws/subtopics/ec2/progress.yaml", createMockTopicProgress({
         topic: "ec2",
         display_name: "EC2",
       }));
