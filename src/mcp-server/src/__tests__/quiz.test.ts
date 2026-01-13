@@ -135,7 +135,7 @@ describe("Quiz Tools", () => {
   describe("startQuiz", () => {
     it("should initialize a quiz session with correct parameters", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
 
       // Execute
       const result = await startQuizHandler({ topic: "docker" });
@@ -163,7 +163,7 @@ describe("Quiz Tools", () => {
 
     it("should return error when topic has no level set", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress({ current_level: null }));
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress({ current_level: null }));
 
       // Execute
       const result = await startQuizHandler({ topic: "docker" });
@@ -175,7 +175,7 @@ describe("Quiz Tools", () => {
 
     it("should select Pokemon based on level tier", async () => {
       // Setup - starter level should give tier 1-2 Pokemon
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress({ current_level: "starter" }));
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress({ current_level: "starter" }));
 
       // Execute
       const result = await startQuizHandler({ topic: "docker" });
@@ -188,7 +188,7 @@ describe("Quiz Tools", () => {
 
     it("should return appropriate gym leader for level", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress({ current_level: "beginner" }));
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress({ current_level: "beginner" }));
 
       // Execute
       const result = await startQuizHandler({ topic: "docker" });
@@ -202,7 +202,7 @@ describe("Quiz Tools", () => {
 
     it("should store session in memory", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
 
       // Execute
       const result = await startQuizHandler({ topic: "docker" });
@@ -216,7 +216,7 @@ describe("Quiz Tools", () => {
 
     it("should support optional course parameter", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
 
       // Execute
       const result = await startQuizHandler({ topic: "docker", course: "01-first-container" });
@@ -229,7 +229,7 @@ describe("Quiz Tools", () => {
 
     it("should support wild encounter type", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
 
       // Execute
       const result = await startQuizHandler({ topic: "docker", type: "wild" });
@@ -242,7 +242,7 @@ describe("Quiz Tools", () => {
 
     it("should calculate pass threshold based on tier", async () => {
       // Setup - beginner level should give tier 2-3
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress({ current_level: "beginner" }));
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress({ current_level: "beginner" }));
 
       // Execute
       const result = await startQuizHandler({ topic: "docker" });
@@ -258,7 +258,7 @@ describe("Quiz Tools", () => {
   describe("submitQuizResult", () => {
     it("should calculate points correctly on pass", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
       await writeTestYaml("trainer.yaml", createMockTrainerData());
       await writeTestYaml("pokedex.yaml", createMockPokedexData());
 
@@ -281,7 +281,7 @@ describe("Quiz Tools", () => {
 
     it("should award partial points on fail", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
       await writeTestYaml("trainer.yaml", createMockTrainerData());
       await writeTestYaml("pokedex.yaml", createMockPokedexData());
 
@@ -304,7 +304,7 @@ describe("Quiz Tools", () => {
 
     it("should catch Pokemon on pass", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
       await writeTestYaml("trainer.yaml", createMockTrainerData());
       await writeTestYaml("pokedex.yaml", createMockPokedexData());
 
@@ -327,7 +327,7 @@ describe("Quiz Tools", () => {
 
     it("should record result in quiz history", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
       await writeTestYaml("trainer.yaml", createMockTrainerData());
       await writeTestYaml("pokedex.yaml", createMockPokedexData());
 
@@ -362,7 +362,7 @@ describe("Quiz Tools", () => {
 
     it("should update trainer points", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
       await writeTestYaml("trainer.yaml", createMockTrainerData({ total_points: 500 }));
       await writeTestYaml("pokedex.yaml", createMockPokedexData());
 
@@ -383,7 +383,7 @@ describe("Quiz Tools", () => {
 
     it("should add Pokemon to pokedex on catch", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
       await writeTestYaml("trainer.yaml", createMockTrainerData());
       await writeTestYaml("pokedex.yaml", createMockPokedexData());
 
@@ -406,7 +406,7 @@ describe("Quiz Tools", () => {
 
     it("should remove session after submission", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
       await writeTestYaml("trainer.yaml", createMockTrainerData());
       await writeTestYaml("pokedex.yaml", createMockPokedexData());
 
@@ -427,7 +427,7 @@ describe("Quiz Tools", () => {
 
     it("should include point breakdown", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
       await writeTestYaml("trainer.yaml", createMockTrainerData());
       await writeTestYaml("pokedex.yaml", createMockPokedexData());
 
@@ -623,7 +623,7 @@ describe("Quiz Tools", () => {
 
     it("should select random Pokemon from tier", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress({ current_level: "starter" }));
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress({ current_level: "starter" }));
 
       // Execute multiple times to verify randomness
       const names = new Set<string>();
@@ -643,7 +643,7 @@ describe("Quiz Tools", () => {
   describe("Edge Cases", () => {
     it("should handle perfect score", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
       await writeTestYaml("trainer.yaml", createMockTrainerData());
       await writeTestYaml("pokedex.yaml", createMockPokedexData());
 
@@ -665,7 +665,7 @@ describe("Quiz Tools", () => {
 
     it("should handle zero correct answers", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
       await writeTestYaml("trainer.yaml", createMockTrainerData());
       await writeTestYaml("pokedex.yaml", createMockPokedexData());
 
@@ -688,7 +688,7 @@ describe("Quiz Tools", () => {
 
     it("should handle expert level with tier 5 Pokemon", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress({ current_level: "expert" }));
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress({ current_level: "expert" }));
 
       // Execute
       const result = await startQuizHandler({ topic: "docker" });

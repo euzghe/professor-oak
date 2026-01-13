@@ -11,6 +11,7 @@ import * as path from "path";
 import { readYaml, writeYaml } from "../services/yaml.js";
 import { LEVELS, POINTS } from "../config/constants.js";
 import { calculateRank } from "../services/points.js";
+import { getTopicPath, getProgressPath, TOPICS_BASE_PATH } from "../services/paths.js";
 import type { TopicProgress, LevelRoadmap } from "../types/progress.js";
 import type { TrainerData } from "../types/trainer.js";
 
@@ -122,8 +123,8 @@ export async function getProgressHandler(args: {
 
   // Determine topic path (handle subtopics like aws/ec2)
   const topicPath = topic.includes("/")
-    ? `src/${topic.split("/")[0]}/subtopics/${topic.split("/")[1]}`
-    : `src/${topic}`;
+    ? `topics/${topic.split("/")[0]}/subtopics/${topic.split("/")[1]}`
+    : `topics/${topic}`;
 
   const result = await readYaml<TopicProgress>(`${topicPath}/progress.yaml`);
 
@@ -212,7 +213,7 @@ export async function completeItemHandler(args: {
 }): Promise<CompleteItemResponse> {
   const { topic, level, type, itemId, courseId } = args;
 
-  const topicPath = `src/${topic}`;
+  const topicPath = `topics/${topic}`;
   const result = await readYaml<TopicProgress>(`${topicPath}/progress.yaml`);
 
   if (!result.success || !result.data) {
@@ -329,7 +330,7 @@ export async function getNextActionHandler(args: {
 }): Promise<NextActionResponse> {
   const { topic } = args;
 
-  const topicPath = `src/${topic}`;
+  const topicPath = `topics/${topic}`;
   const result = await readYaml<TopicProgress>(`${topicPath}/progress.yaml`);
 
   if (!result.success || !result.data) {
@@ -475,12 +476,12 @@ export async function getOverallProgressHandler(args: {
 
   // Scan src directory for topics
   try {
-    const srcPath = path.join(getDataPath(), "src");
+    const srcPath = path.join(getDataPath(), TOPICS_BASE_PATH);
     const entries = await fs.readdir(srcPath, { withFileTypes: true });
 
     for (const entry of entries) {
       if (entry.isDirectory() && !entry.name.startsWith(".")) {
-        const progressPath = `src/${entry.name}/progress.yaml`;
+        const progressPath = `topics/${entry.name}/progress.yaml`;
         const result = await readYaml<TopicProgress>(progressPath);
 
         if (result.success && result.data) {
@@ -503,7 +504,7 @@ export async function getOverallProgressHandler(args: {
           topics.push({
             name: data.topic,
             displayName: data.display_name,
-            path: `src/${entry.name}`,
+            path: `topics/${entry.name}`,
             currentLevel: data.current_level,
             completion:
               totalCourses > 0

@@ -126,8 +126,8 @@ describe("Rewards Tools", () => {
   describe("awardBadge", () => {
     it("should award a badge when level is complete", async () => {
       // Setup - all requirements met
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
-      await writeTestYaml("src/docker/rewards.yaml", createMockTopicRewards());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/rewards.yaml", createMockTopicRewards());
       await writeTestYaml("trainer.yaml", createMockTrainerData());
 
       // Execute
@@ -147,8 +147,8 @@ describe("Rewards Tools", () => {
 
     it("should create badge with correct id format", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
-      await writeTestYaml("src/docker/rewards.yaml", createMockTopicRewards());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/rewards.yaml", createMockTopicRewards());
       await writeTestYaml("trainer.yaml", createMockTrainerData());
 
       // Execute
@@ -163,8 +163,8 @@ describe("Rewards Tools", () => {
 
     it("should use custom badgeId when provided", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
-      await writeTestYaml("src/docker/rewards.yaml", createMockTopicRewards());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/rewards.yaml", createMockTopicRewards());
       await writeTestYaml("trainer.yaml", createMockTrainerData());
 
       // Execute
@@ -180,8 +180,8 @@ describe("Rewards Tools", () => {
 
     it("should update rewards.yaml with new badge", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
-      await writeTestYaml("src/docker/rewards.yaml", createMockTopicRewards());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/rewards.yaml", createMockTopicRewards());
       await writeTestYaml("trainer.yaml", createMockTrainerData());
 
       // Execute
@@ -191,7 +191,7 @@ describe("Rewards Tools", () => {
       });
 
       // Verify
-      const rewards = await readTestYaml<TopicRewards>("src/docker/rewards.yaml");
+      const rewards = await readTestYaml<TopicRewards>("topics/docker/rewards.yaml");
       expect(rewards.badges).toHaveLength(1);
       expect(rewards.badges[0].name).toBe("Boulder Badge");
       expect(rewards.badges[0].earned_at).toMatch(/^\d{4}-\d{2}-\d{2}$/);
@@ -199,8 +199,8 @@ describe("Rewards Tools", () => {
 
     it("should update trainer.yaml first_badge achievement", async () => {
       // Setup - trainer without first badge
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
-      await writeTestYaml("src/docker/rewards.yaml", createMockTopicRewards());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/rewards.yaml", createMockTopicRewards());
       await writeTestYaml("trainer.yaml", createMockTrainerData({
         achievements: {
           first_pokemon: "Pidgey",
@@ -222,8 +222,8 @@ describe("Rewards Tools", () => {
 
     it("should not update first_badge if already set", async () => {
       // Setup - trainer already has first badge
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
-      await writeTestYaml("src/docker/rewards.yaml", createMockTopicRewards());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/rewards.yaml", createMockTopicRewards());
       await writeTestYaml("trainer.yaml", createMockTrainerData({
         achievements: {
           first_pokemon: "Pidgey",
@@ -245,8 +245,8 @@ describe("Rewards Tools", () => {
 
     it("should add 500 points to trainer", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
-      await writeTestYaml("src/docker/rewards.yaml", createMockTopicRewards());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/rewards.yaml", createMockTopicRewards());
       await writeTestYaml("trainer.yaml", createMockTrainerData({ total_points: 100 }));
 
       // Execute
@@ -264,8 +264,8 @@ describe("Rewards Tools", () => {
       // Setup - quiz not passed
       const progress = createMockTopicProgress();
       progress.roadmap.starter.quizPassed = false;
-      await writeTestYaml("src/docker/progress.yaml", progress);
-      await writeTestYaml("src/docker/rewards.yaml", createMockTopicRewards());
+      await writeTestYaml("topics/docker/progress.yaml", progress);
+      await writeTestYaml("topics/docker/rewards.yaml", createMockTopicRewards());
       await writeTestYaml("trainer.yaml", createMockTrainerData());
 
       // Execute
@@ -283,8 +283,8 @@ describe("Rewards Tools", () => {
       // Setup - course not completed
       const progress = createMockTopicProgress();
       progress.roadmap.starter.courses[1].completed = false;
-      await writeTestYaml("src/docker/progress.yaml", progress);
-      await writeTestYaml("src/docker/rewards.yaml", createMockTopicRewards());
+      await writeTestYaml("topics/docker/progress.yaml", progress);
+      await writeTestYaml("topics/docker/rewards.yaml", createMockTopicRewards());
       await writeTestYaml("trainer.yaml", createMockTrainerData());
 
       // Execute
@@ -302,8 +302,8 @@ describe("Rewards Tools", () => {
       // Setup - exercise not completed
       const progress = createMockTopicProgress();
       progress.roadmap.starter.exercices["01-introduction"][0].completed = false;
-      await writeTestYaml("src/docker/progress.yaml", progress);
-      await writeTestYaml("src/docker/rewards.yaml", createMockTopicRewards());
+      await writeTestYaml("topics/docker/progress.yaml", progress);
+      await writeTestYaml("topics/docker/rewards.yaml", createMockTopicRewards());
       await writeTestYaml("trainer.yaml", createMockTrainerData());
 
       // Execute
@@ -319,8 +319,8 @@ describe("Rewards Tools", () => {
 
     it("should fail if badge already earned for this level", async () => {
       // Setup - badge already exists
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
-      await writeTestYaml("src/docker/rewards.yaml", createMockTopicRewards({
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/rewards.yaml", createMockTopicRewards({
         badges: [
           {
             id: "boulder-badge-docker",
@@ -360,8 +360,8 @@ describe("Rewards Tools", () => {
 
     it("should fail for invalid level", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
-      await writeTestYaml("src/docker/rewards.yaml", createMockTopicRewards());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/rewards.yaml", createMockTopicRewards());
       await writeTestYaml("trainer.yaml", createMockTrainerData());
 
       // Execute
@@ -379,7 +379,7 @@ describe("Rewards Tools", () => {
   describe("getBadges", () => {
     it("should return all badges when no topic specified", async () => {
       // Setup - badges in multiple topics
-      await writeTestYaml("src/docker/rewards.yaml", createMockTopicRewards({
+      await writeTestYaml("topics/docker/rewards.yaml", createMockTopicRewards({
         badges: [
           {
             id: "boulder-badge-docker",
@@ -392,7 +392,7 @@ describe("Rewards Tools", () => {
           },
         ],
       }));
-      await writeTestYaml("src/python/rewards.yaml", createMockTopicRewards({
+      await writeTestYaml("topics/python/rewards.yaml", createMockTopicRewards({
         topic: "python",
         badges: [
           {
@@ -419,7 +419,7 @@ describe("Rewards Tools", () => {
 
     it("should return badges filtered by topic", async () => {
       // Setup
-      await writeTestYaml("src/docker/rewards.yaml", createMockTopicRewards({
+      await writeTestYaml("topics/docker/rewards.yaml", createMockTopicRewards({
         badges: [
           {
             id: "boulder-badge-docker",
@@ -441,7 +441,7 @@ describe("Rewards Tools", () => {
           },
         ],
       }));
-      await writeTestYaml("src/python/rewards.yaml", createMockTopicRewards({
+      await writeTestYaml("topics/python/rewards.yaml", createMockTopicRewards({
         topic: "python",
         badges: [
           {
@@ -467,7 +467,7 @@ describe("Rewards Tools", () => {
 
     it("should return empty array when no badges earned", async () => {
       // Setup
-      await writeTestYaml("src/docker/rewards.yaml", createMockTopicRewards());
+      await writeTestYaml("topics/docker/rewards.yaml", createMockTopicRewards());
 
       // Execute
       const result = await getBadges({ topic: "docker" });
@@ -479,7 +479,7 @@ describe("Rewards Tools", () => {
 
     it("should include badge metadata", async () => {
       // Setup
-      await writeTestYaml("src/docker/rewards.yaml", createMockTopicRewards({
+      await writeTestYaml("topics/docker/rewards.yaml", createMockTopicRewards({
         badges: [
           {
             id: "boulder-badge-docker",
@@ -518,7 +518,7 @@ describe("Rewards Tools", () => {
 
     it("should return total count", async () => {
       // Setup
-      await writeTestYaml("src/docker/rewards.yaml", createMockTopicRewards({
+      await writeTestYaml("topics/docker/rewards.yaml", createMockTopicRewards({
         badges: [
           {
             id: "boulder-badge-docker",
@@ -552,8 +552,8 @@ describe("Rewards Tools", () => {
   describe("checkBadgeEligibility", () => {
     it("should return eligible when all requirements met", async () => {
       // Setup - all requirements met
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
-      await writeTestYaml("src/docker/rewards.yaml", createMockTopicRewards());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/rewards.yaml", createMockTopicRewards());
 
       // Execute
       const result = await checkBadgeEligibility({
@@ -570,8 +570,8 @@ describe("Rewards Tools", () => {
       // Setup - course not completed
       const progress = createMockTopicProgress();
       progress.roadmap.starter.courses[1].completed = false;
-      await writeTestYaml("src/docker/progress.yaml", progress);
-      await writeTestYaml("src/docker/rewards.yaml", createMockTopicRewards());
+      await writeTestYaml("topics/docker/progress.yaml", progress);
+      await writeTestYaml("topics/docker/rewards.yaml", createMockTopicRewards());
 
       // Execute
       const result = await checkBadgeEligibility({
@@ -590,8 +590,8 @@ describe("Rewards Tools", () => {
       // Setup - exercise not completed
       const progress = createMockTopicProgress();
       progress.roadmap.starter.exercices["01-introduction"][0].completed = false;
-      await writeTestYaml("src/docker/progress.yaml", progress);
-      await writeTestYaml("src/docker/rewards.yaml", createMockTopicRewards());
+      await writeTestYaml("topics/docker/progress.yaml", progress);
+      await writeTestYaml("topics/docker/rewards.yaml", createMockTopicRewards());
 
       // Execute
       const result = await checkBadgeEligibility({
@@ -609,8 +609,8 @@ describe("Rewards Tools", () => {
       // Setup - quiz not passed
       const progress = createMockTopicProgress();
       progress.roadmap.starter.quizPassed = false;
-      await writeTestYaml("src/docker/progress.yaml", progress);
-      await writeTestYaml("src/docker/rewards.yaml", createMockTopicRewards());
+      await writeTestYaml("topics/docker/progress.yaml", progress);
+      await writeTestYaml("topics/docker/rewards.yaml", createMockTopicRewards());
 
       // Execute
       const result = await checkBadgeEligibility({
@@ -626,8 +626,8 @@ describe("Rewards Tools", () => {
 
     it("should return not eligible if badge already earned", async () => {
       // Setup - badge already earned
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
-      await writeTestYaml("src/docker/rewards.yaml", createMockTopicRewards({
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/rewards.yaml", createMockTopicRewards({
         badges: [
           {
             id: "boulder-badge-docker",
@@ -659,8 +659,8 @@ describe("Rewards Tools", () => {
       progress.roadmap.starter.courses[1].completed = false;
       progress.roadmap.starter.exercices["02-installation"][0].completed = false;
       progress.roadmap.starter.quizPassed = false;
-      await writeTestYaml("src/docker/progress.yaml", progress);
-      await writeTestYaml("src/docker/rewards.yaml", createMockTopicRewards());
+      await writeTestYaml("topics/docker/progress.yaml", progress);
+      await writeTestYaml("topics/docker/rewards.yaml", createMockTopicRewards());
 
       // Execute
       const result = await checkBadgeEligibility({
@@ -691,8 +691,8 @@ describe("Rewards Tools", () => {
       // Setup
       const progress = createMockTopicProgress();
       progress.roadmap.starter.courses[1].completed = false;
-      await writeTestYaml("src/docker/progress.yaml", progress);
-      await writeTestYaml("src/docker/rewards.yaml", createMockTopicRewards());
+      await writeTestYaml("topics/docker/progress.yaml", progress);
+      await writeTestYaml("topics/docker/rewards.yaml", createMockTopicRewards());
 
       // Execute
       const result = await checkBadgeEligibility({
@@ -718,8 +718,8 @@ describe("Rewards Tools", () => {
 
     it("should return error for invalid level", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
-      await writeTestYaml("src/docker/rewards.yaml", createMockTopicRewards());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/rewards.yaml", createMockTopicRewards());
 
       // Execute
       const result = await checkBadgeEligibility({
@@ -737,8 +737,8 @@ describe("Rewards Tools", () => {
       const progress = createMockTopicProgress();
       progress.roadmap.starter.quizRequired = false;
       progress.roadmap.starter.quizPassed = false;
-      await writeTestYaml("src/docker/progress.yaml", progress);
-      await writeTestYaml("src/docker/rewards.yaml", createMockTopicRewards());
+      await writeTestYaml("topics/docker/progress.yaml", progress);
+      await writeTestYaml("topics/docker/rewards.yaml", createMockTopicRewards());
 
       // Execute
       const result = await checkBadgeEligibility({
@@ -754,8 +754,8 @@ describe("Rewards Tools", () => {
 
     it("should return badge info for the level", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
-      await writeTestYaml("src/docker/rewards.yaml", createMockTopicRewards());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/rewards.yaml", createMockTopicRewards());
 
       // Execute
       const result = await checkBadgeEligibility({
@@ -777,8 +777,8 @@ describe("Rewards Tools", () => {
       // Setup - no exercises defined
       const progress = createMockTopicProgress();
       progress.roadmap.starter.exercices = {};
-      await writeTestYaml("src/docker/progress.yaml", progress);
-      await writeTestYaml("src/docker/rewards.yaml", createMockTopicRewards());
+      await writeTestYaml("topics/docker/progress.yaml", progress);
+      await writeTestYaml("topics/docker/rewards.yaml", createMockTopicRewards());
 
       // Execute
       const result = await checkBadgeEligibility({
@@ -801,8 +801,8 @@ describe("Rewards Tools", () => {
         mandatory: false,
         completed: false,
       });
-      await writeTestYaml("src/docker/progress.yaml", progress);
-      await writeTestYaml("src/docker/rewards.yaml", createMockTopicRewards());
+      await writeTestYaml("topics/docker/progress.yaml", progress);
+      await writeTestYaml("topics/docker/rewards.yaml", createMockTopicRewards());
 
       // Execute
       const result = await checkBadgeEligibility({
@@ -817,7 +817,7 @@ describe("Rewards Tools", () => {
 
     it("should create rewards.yaml if it does not exist when awarding badge", async () => {
       // Setup - no rewards.yaml
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
       await writeTestYaml("trainer.yaml", createMockTrainerData());
       // Note: not creating rewards.yaml
 
@@ -829,14 +829,14 @@ describe("Rewards Tools", () => {
 
       // Verify
       expect(result.success).toBe(true);
-      const rewards = await readTestYaml<TopicRewards>("src/docker/rewards.yaml");
+      const rewards = await readTestYaml<TopicRewards>("topics/docker/rewards.yaml");
       expect(rewards.badges).toHaveLength(1);
     });
 
     it("should add point history entry when awarding badge", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
-      await writeTestYaml("src/docker/rewards.yaml", createMockTopicRewards());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/rewards.yaml", createMockTopicRewards());
       await writeTestYaml("trainer.yaml", createMockTrainerData({ point_history: [] }));
 
       // Execute
@@ -855,8 +855,8 @@ describe("Rewards Tools", () => {
 
     it("should handle rank promotion when awarding badge", async () => {
       // Setup - just below next rank
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
-      await writeTestYaml("src/docker/rewards.yaml", createMockTopicRewards());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/rewards.yaml", createMockTopicRewards());
       await writeTestYaml("trainer.yaml", createMockTrainerData({
         total_points: 1600,
         rank: "Pokemon Trainer",
@@ -879,8 +879,8 @@ describe("Rewards Tools", () => {
   describe("getRewards", () => {
     it("should return rewards status for all levels", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
-      await writeTestYaml("src/docker/rewards.yaml", createMockTopicRewards());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/rewards.yaml", createMockTopicRewards());
 
       // Execute
       const result = await getRewards({ topic: "docker" });
@@ -899,8 +899,8 @@ describe("Rewards Tools", () => {
 
     it("should show progress toward badges for each level", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
-      await writeTestYaml("src/docker/rewards.yaml", createMockTopicRewards());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/rewards.yaml", createMockTopicRewards());
 
       // Execute
       const result = await getRewards({ topic: "docker" });
@@ -926,8 +926,8 @@ describe("Rewards Tools", () => {
 
     it("should show badge eligibility for each level", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
-      await writeTestYaml("src/docker/rewards.yaml", createMockTopicRewards());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/rewards.yaml", createMockTopicRewards());
 
       // Execute
       const result = await getRewards({ topic: "docker" });
@@ -944,9 +944,9 @@ describe("Rewards Tools", () => {
 
     it("should include earned badges in response", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
       await writeTestYaml(
-        "src/docker/rewards.yaml",
+        "topics/docker/rewards.yaml",
         createMockTopicRewards({
           badges: [
             {
@@ -976,8 +976,8 @@ describe("Rewards Tools", () => {
 
     it("should show null for unearned badges", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
-      await writeTestYaml("src/docker/rewards.yaml", createMockTopicRewards());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/rewards.yaml", createMockTopicRewards());
 
       // Execute
       const result = await getRewards({ topic: "docker" });
@@ -989,7 +989,7 @@ describe("Rewards Tools", () => {
 
     it("should handle topic with no rewards.yaml", async () => {
       // Setup - progress but no rewards
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
       // Not creating rewards.yaml
 
       // Execute
@@ -1003,9 +1003,9 @@ describe("Rewards Tools", () => {
 
     it("should include milestones in response", async () => {
       // Setup
-      await writeTestYaml("src/docker/progress.yaml", createMockTopicProgress());
+      await writeTestYaml("topics/docker/progress.yaml", createMockTopicProgress());
       await writeTestYaml(
-        "src/docker/rewards.yaml",
+        "topics/docker/rewards.yaml",
         createMockTopicRewards({
           milestones: [
             {
@@ -1059,8 +1059,8 @@ describe("Rewards Tools", () => {
         ],
       };
       progress.roadmap.beginner.quizPassed = false;
-      await writeTestYaml("src/docker/progress.yaml", progress);
-      await writeTestYaml("src/docker/rewards.yaml", createMockTopicRewards());
+      await writeTestYaml("topics/docker/progress.yaml", progress);
+      await writeTestYaml("topics/docker/rewards.yaml", createMockTopicRewards());
 
       // Execute
       const result = await getRewards({ topic: "docker" });
@@ -1077,8 +1077,8 @@ describe("Rewards Tools", () => {
       // Setup - only starter level initialized
       const progress = createMockTopicProgress();
       progress.roadmap.beginner = undefined as any;
-      await writeTestYaml("src/docker/progress.yaml", progress);
-      await writeTestYaml("src/docker/rewards.yaml", createMockTopicRewards());
+      await writeTestYaml("topics/docker/progress.yaml", progress);
+      await writeTestYaml("topics/docker/rewards.yaml", createMockTopicRewards());
 
       // Execute
       const result = await getRewards({ topic: "docker" });
@@ -1094,8 +1094,8 @@ describe("Rewards Tools", () => {
       progress.roadmap.starter.status = "completed";
       progress.roadmap.beginner.status = "active";
       progress.roadmap.advanced.status = "pending";
-      await writeTestYaml("src/docker/progress.yaml", progress);
-      await writeTestYaml("src/docker/rewards.yaml", createMockTopicRewards());
+      await writeTestYaml("topics/docker/progress.yaml", progress);
+      await writeTestYaml("topics/docker/rewards.yaml", createMockTopicRewards());
 
       // Execute
       const result = await getRewards({ topic: "docker" });

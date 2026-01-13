@@ -15,6 +15,7 @@ import type { TopicRewards, Badge } from "../types/rewards.js";
 import type { TopicProgress, LevelRoadmap } from "../types/progress.js";
 import type { TrainerData } from "../types/trainer.js";
 import { calculateRank } from "../services/points.js";
+import { TOPICS_BASE_PATH } from "../services/paths.js";
 
 /**
  * Get the data path from environment variable.
@@ -29,7 +30,7 @@ function getDataPath(): string {
  */
 async function getTopicsWithRewards(): Promise<string[]> {
   const topics: string[] = [];
-  const srcPath = path.join(getDataPath(), "src");
+  const srcPath = path.join(getDataPath(), TOPICS_BASE_PATH);
 
   try {
     const entries = await fs.readdir(srcPath, { withFileTypes: true });
@@ -127,7 +128,7 @@ export async function awardBadge(input: {
 
   // Read progress.yaml
   const progressResult = await readYaml<TopicProgress>(
-    `src/${input.topic}/progress.yaml`
+    `topics/${input.topic}/progress.yaml`
   );
 
   if (!progressResult.success) {
@@ -150,7 +151,7 @@ export async function awardBadge(input: {
   // Check if badge already earned
   let rewards: TopicRewards;
   const rewardsResult = await readYaml<TopicRewards>(
-    `src/${input.topic}/rewards.yaml`
+    `topics/${input.topic}/rewards.yaml`
   );
 
   if (rewardsResult.success) {
@@ -231,7 +232,7 @@ export async function awardBadge(input: {
   // Add badge to rewards
   rewards.badges.push(badge);
   await writeYaml(
-    `src/${input.topic}/rewards.yaml`,
+    `topics/${input.topic}/rewards.yaml`,
     rewards,
     "Professor Oak - Topic Rewards"
   );
@@ -298,7 +299,7 @@ export async function getBadges(input: { topic?: string }): Promise<any> {
   if (input.topic) {
     // Get badges for specific topic
     const rewardsResult = await readYaml<TopicRewards>(
-      `src/${input.topic}/rewards.yaml`
+      `topics/${input.topic}/rewards.yaml`
     );
 
     if (!rewardsResult.success) {
@@ -318,7 +319,7 @@ export async function getBadges(input: { topic?: string }): Promise<any> {
 
     for (const topic of topics) {
       const rewardsResult = await readYaml<TopicRewards>(
-        `src/${topic}/rewards.yaml`
+        `topics/${topic}/rewards.yaml`
       );
 
       if (rewardsResult.success) {
@@ -345,7 +346,7 @@ export async function getRewards(input: {
 }): Promise<any> {
   // Read progress.yaml
   const progressResult = await readYaml<TopicProgress>(
-    `src/${input.topic}/progress.yaml`
+    `topics/${input.topic}/progress.yaml`
   );
 
   if (!progressResult.success) {
@@ -359,7 +360,7 @@ export async function getRewards(input: {
 
   // Read rewards.yaml
   const rewardsResult = await readYaml<TopicRewards>(
-    `src/${input.topic}/rewards.yaml`
+    `topics/${input.topic}/rewards.yaml`
   );
 
   let rewards: TopicRewards | null = null;
@@ -462,7 +463,7 @@ export async function checkBadgeEligibility(input: {
 
   // Read progress.yaml
   const progressResult = await readYaml<TopicProgress>(
-    `src/${input.topic}/progress.yaml`
+    `topics/${input.topic}/progress.yaml`
   );
 
   if (!progressResult.success) {
@@ -484,7 +485,7 @@ export async function checkBadgeEligibility(input: {
 
   // Check if badge already earned
   const rewardsResult = await readYaml<TopicRewards>(
-    `src/${input.topic}/rewards.yaml`
+    `topics/${input.topic}/rewards.yaml`
   );
 
   let alreadyEarned = false;
