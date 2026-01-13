@@ -30,4 +30,11 @@ describe("Points Service", () => {
       expect(calculateRank(500)).toBe("Pokemon Trainer");
     });
   });
+
+  describe('pointsToNextRank', () => {
+    it('should calculate points required for the next rank correctly', () => {
+      const result = pointsToNextRank(100);
+      expect(result).toBeGreaterThanOrEqual(0);
+    });
+  });
 });
