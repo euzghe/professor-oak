@@ -123,7 +123,7 @@ export function registerTopicTools(server: McpServer) {
       if (!isValidTopicPath(topic)) {
         return jsonResponse({
           success: false,
-          error: ,
+          error: "Invalid topic path: must not contain traversal characters.",
         });
       }
 
