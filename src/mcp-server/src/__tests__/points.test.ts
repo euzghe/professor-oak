@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { calculatePoints, calculateRank, pointsToNextRank } from "../../services/points.js";
+import { calculatePoints, calculateRank, pointsToNextRank } from "../services/points.js";
 
 describe("Points Service", () => {
   describe("calculatePoints", () => {
